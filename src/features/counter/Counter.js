@@ -1,22 +1,45 @@
-import React, { useState } from "react";
+import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
-  decrement,
-  increment,
+  //decrement,
+  //increment,
   incrementByAmount,
-  incrementAsync,
+  setIncrementAmount,
+  //incrementAsync,
   selectCount,
+  selectIncrement,
 } from "./counterSlice";
+import {
+  incrementLumberjackByAmount,
+  selectLumberjack,
+} from "../lumberjack/lumberjackSlice";
+import {
+  incrementChainsawByAmount,
+  selectChainsaw,
+} from "../chainsaw/chainsawSlice";
+import {
+  incrementLoggingTruckByAmount,
+  selectLoggingTruck,
+} from "../loggingTruck/loggingTruckSlice";
+import {
+  incrementTunguskaByAmount,
+  selectTunguska,
+} from "../tunguska/tunguskaSlice";
 import styles from "./Counter.module.css";
 
 export function Counter() {
   const count = useSelector(selectCount);
+  const incrementAmount = useSelector(selectIncrement);
+  const lumberjackAmount = useSelector(selectLumberjack);
+  const chainsawAmount = useSelector(selectChainsaw);
+  const loggingTruckAmount = useSelector(selectLoggingTruck);
+  const tunguskaAmount = useSelector(selectTunguska);
   const dispatch = useDispatch();
-  const [incrementAmount, setIncrementAmount] = useState(1);
-  const [lumberjackAmount, incrementLumberjacksAmount] = useState(0);
-  const [chainsawAmount, incrementChainsawAmount] = useState(0);
-  const [loggingtruckAmount, incrementLoggingtruckAmount] = useState(0);
-  const [tunguskaAmount, incrementTunguskaAmount] = useState(0);
+  //const [incrementAmount, setIncrementAmount] = useState(1);
+  //const [lumberjackAmount, incrementLumberjacksAmount] = useState(0);
+  //const [chainsawAmount, incrementChainsawAmount] = useState(0);
+  //const [loggingtruckAmount, incrementLoggingtruckAmount] = useState(0);
+  //const [tunguskaAmount, incrementTunguskaAmount] = useState(0);
 
   return (
     <div>
@@ -58,14 +81,15 @@ export function Counter() {
           className={styles.textbox}
           aria-label="Set increment amount"
           value={incrementAmount}
+          readOnly
         />
       </div>
       <div className={styles.row}>
         <button
           className={styles.button}
           onClick={(e) => {
-            setIncrementAmount(incrementAmount + 2);
-            incrementLumberjacksAmount(lumberjackAmount + 1);
+            dispatch(incrementLumberjackByAmount(Number(1) || 0));
+            dispatch(setIncrementAmount(Number(2) || 0));
           }}
         >
           Hire Lumberjack
@@ -77,8 +101,8 @@ export function Counter() {
         <button
           className={styles.button}
           onClick={(e) => {
-            setIncrementAmount(incrementAmount + 5);
-            incrementChainsawAmount(chainsawAmount + 1);
+            dispatch(incrementChainsawByAmount(Number(1) || 0));
+            dispatch(setIncrementAmount(Number(5) || 0));
           }}
         >
           Buy Chainsaw
@@ -98,13 +122,13 @@ export function Counter() {
         <button
           className={styles.button}
           onClick={(e) => {
-            setIncrementAmount(incrementAmount + 10);
-            incrementLoggingtruckAmount(loggingtruckAmount + 1);
+            dispatch(incrementLoggingTruckByAmount(Number(1) || 0));
+            dispatch(setIncrementAmount(Number(10) || 0));
           }}
         >
           Buy Logging Truck
         </button>
-        <span className={styles.value}>{loggingtruckAmount} </span>
+        <span className={styles.value}>{loggingTruckAmount} </span>
         <span>Logging Trucks</span>
         {/*
         <button
@@ -119,8 +143,8 @@ export function Counter() {
         <button
           className={styles.button}
           onClick={(e) => {
-            setIncrementAmount(incrementAmount * 100000000);
-            incrementTunguskaAmount(tunguskaAmount + 1);
+            dispatch(incrementTunguskaByAmount(Number(1) || 0));
+            dispatch(setIncrementAmount(Number(80000000) || 0));
           }}
         >
           Commission Tunguska-Class Orbital Kinetic Strike Facility
